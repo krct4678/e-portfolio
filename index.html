@@ -1,1 +1,512 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Portfolio | แฟ้มสะสมงานอิเล็กทรอนิกส์</title>
+  <!-- นำเข้าฟอนต์ Prompt รองรับภาษาไทย -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --bg-body: #f8fafc;
+      --bg-white: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Prompt', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.7;
+    }
+
+    /* แถบเมนูนำทาง */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-main);
+    }
+
+    /* โครงสร้างหลัก */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ส่วนหน้าแรก (Hero) */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      align-items: center;
+      padding-top: 5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.6rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-outline {
+      border: 1.5px solid var(--border);
+      background: var(--bg-white);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .profile-card {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: 1.25rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .profile-img {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary-light);
+      margin-bottom: 1rem;
+    }
+
+    /* การ์ดข้อมูลทั่วไป */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-white);
+      padding: 1.75rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      color: var(--text-main);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.25rem 0.7rem;
+      border-radius: 0.4rem;
+    }
+
+    .card-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ส่วนท้ายเว็บไซต์ */
+    footer {
+      background: var(--bg-white);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer .credit {
+      margin-top: 0.5rem;
+      font-size: 0.82rem;
+    }
+
+    /* รองรับหน้าจอมือถือ */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 3rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .btn-group {
+        justify-content: center;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-white);
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- แถบเมนูนำทาง -->
+  <header>
+    <div class="nav-container">
+      <a href="#home" class="logo">My E-Portfolio</a>
+      <button class="menu-toggle" id="menuBtn" aria-label="เปิดเมนู">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">หน้าแรก</a></li>
+        <li><a href="#about">เกี่ยวกับฉัน</a></li>
+        <li><a href="#projects">ผลงานและโค้ด</a></li>
+        <li><a href="#activities">กิจกรรม</a></li>
+        <li><a href="#contact">ติดต่อ</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ส่วนหน้าแรก -->
+  <section id="home" class="hero">
+    <div>
+      <span class="badge">วิทยาการคำนวณ ม.6 • E-Portfolio</span>
+      <!-- แก้ไขชื่อ-นามสกุลของคุณตรงนี้ -->
+      <h1>สวัสดีครับ/ค่ะ ฉันชื่อ <span>[ชื่อ-นามสกุล นักเรียน]</span></h1>
+      <p>
+        นักเรียนระดับชั้นมัธยมศึกษาปีที่ 6 ผู้มีความสนใจด้านการเขียนโปรแกรม การพัฒนาเว็บไซต์ 
+        และการประยุกต์ใช้เทคโนโลยี AI เพื่อสร้างสรรค์นวัตกรรมที่เป็นประโยชน์
+      </p>
+      <div class="btn-group">
+        <a href="#projects" class="btn btn-primary">ดูผลงานและซอร์สโค้ด</a>
+        <!-- แก้ไขลิงก์ GitHub ของคุณตรงนี้ -->
+        <a href="https://github.com/username" target="_blank" rel="noopener" class="btn btn-outline">GitHub Profile</a>
+      </div>
+    </div>
+
+    <div class="profile-card">
+      <!-- หากมีรูปภาพตนเอง ให้อัปโหลดไฟล์รูป (เช่น profile.jpg) แล้วเปลี่ยน src="profile.jpg" -->
+      <img 
+        class="profile-img" 
+        src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><rect width='220' height='220' fill='%23eff6ff'/><circle cx='110' cy='85' r='40' fill='%2393c5fd'/><path d='M45 195c0-36 29-65 65-65s65 29 65 65' fill='%2360a5fa'/></svg>" 
+        alt="รูปโปรไฟล์นักเรียน">
+      <h3>[ชื่อเล่น] • ม.6/[ห้อง]</h3>
+      <p style="margin-bottom:0; font-size:0.9rem;">โรงเรียน[ชื่อโรงเรียนของคุณ]</p>
+    </div>
+  </section>
+
+  <!-- ส่วนเกี่ยวกับฉัน (หลีกเลี่ยงข้อมูลอ่อนไหว เช่น เลขบัตรประชาชน ที่อยู่บ้าน เบอร์ส่วนตัว) -->
+  <section id="about">
+    <h2 class="section-title">เกี่ยวกับฉัน (About Me)</h2>
+    <p class="section-subtitle">ประวัติการศึกษา แรงบันดาลใจ และทักษะด้านเทคโนโลยี</p>
+    <div class="grid-2">
+      <div class="card">
+        <div>
+          <h3>🎓 ประวัติการศึกษาและเป้าหมาย</h3>
+          <p>
+            <strong>ระดับชั้น:</strong> มัธยมศึกษาปีที่ 6 แผนการเรียน [ระบุแผนการเรียน]<br>
+            <strong>โรงเรียน:</strong> [ชื่อโรงเรียน]<br>
+            <strong>เป้าหมาย:</strong> ศึกษาต่อในคณะ [ระบุคณะ/สาขาที่สนใจ เช่น วิทยาการคอมพิวเตอร์ / วิศวกรรมซอฟต์แวร์]
+          </p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <h3>💻 ทักษะด้านเทคโนโลยี (Skills)</h3>
+          <p>ทักษะที่ฝึกฝนและนำมาประยุกต์ใช้ในการสร้างโครงงานและแก้ปัญหา</p>
+          <div class="tag-list">
+            <span class="tag">HTML5 & CSS3</span>
+            <span class="tag">JavaScript เบื้องต้น</span>
+            <span class="tag">Python Programming</span>
+            <span class="tag">Git & GitHub Pages</span>
+            <span class="tag">AI Prompt Engineering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ส่วนผลงานและเชื่อมโยงโค้ด (ต้องเชื่อมโยงอย่างน้อย 1 ชิ้นตามเกณฑ์) -->
+  <section id="projects">
+    <h2 class="section-title">ผลงานและซอร์สโค้ด (Projects & Code)</h2>
+    <p class="section-subtitle">รวมผลงานการเขียนโปรแกรมและโครงงานที่เผยแพร่บน GitHub</p>
+    <div class="grid-3">
+
+      <!-- ผลงานโค้ดชิ้นที่ 1 (จำเป็นต้องมีลิงก์ไปยัง Repository โค้ดจริงของคุณ) -->
+      <div class="card">
+        <div>
+          <div class="tag-list">
+            <span class="tag">Python / Web Code</span>
+            <span class="tag">ผลงานหลัก</span>
+          </div>
+          <h3>1. [ชื่อผลงานโค้ด เช่น โปรแกรมคำนวณดัชนีมวลกาย BMI]</h3>
+          <p>
+            อธิบายการทำงานของโค้ด: พัฒนาโปรแกรมรับค่าข้อมูลจากผู้ใช้ คำนวณผลลัพธ์พร้อมแสดงคำแนะนำอัตโนมัติ 
+            เพื่อฝึกทักษะการใช้เงื่อนไขและฟังก์ชัน
+          </p>
+        </div>
+        <!-- เปลี่ยน href เป็นลิงก์ GitHub Repository ของผลงานโค้ดชิ้นนี้ -->
+        <a href="https://github.com/username/project-repo" target="_blank" rel="noopener" class="card-link">
+          🔗 เปิดดูซอร์สโค้ดบน GitHub →
+        </a>
+      </div>
+
+      <!-- ผลงานชิ้นที่ 2 -->
+      <div class="card">
+        <div>
+          <div class="tag-list">
+            <span class="tag">HTML / CSS / JS</span>
+            <span class="tag">Web Development</span>
+          </div>
+          <h3>2. เว็บไซต์ E-Portfolio ส่วนตัว</h3>
+          <p>
+            ออกแบบและพัฒนาเว็บไซต์แฟ้มสะสมงานอิเล็กทรอนิกส์ที่รองรับการแสดงผลทั้งบนคอมพิวเตอร์และมือถือ 
+            เผยแพร่จริงผ่านระบบ GitHub Pages
+          </p>
+        </div>
+        <!-- เปลี่ยน href เป็นลิงก์ Repository ของเว็บนี้ -->
+        <a href="https://github.com/username/e-portfolio" target="_blank" rel="noopener" class="card-link">
+          🔗 ดูโครงสร้างโค้ดเว็บไซต์ →
+        </a>
+      </div>
+
+      <!-- ผลงานชิ้นที่ 3 -->
+      <div class="card">
+        <div>
+          <div class="tag-list">
+            <span class="tag">Data / AI Project</span>
+          </div>
+          <h3>3. [ชื่อโครงงานหรือชิ้นงานอื่น ๆ]</h3>
+          <p>
+            สรุปแนวคิด วิธีการพัฒนา และผลลัพธ์ที่ได้จากการทำโครงงานในรายวิชาวิทยาการคำนวณหรือกิจกรรมชมรม
+          </p>
+        </div>
+        <a href="#contact" class="card-link">
+          📄 ดูรายละเอียดเพิ่มเติม →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ส่วนกิจกรรมและเกียรติบัตร -->
+  <section id="activities">
+    <h2 class="section-title">กิจกรรมและเกียรติบัตร (Activities)</h2>
+    <p class="section-subtitle">การเข้าร่วมอบรม การแข่งขัน และกิจกรรมจิตอาสา</p>
+    <div class="grid-2">
+      <div class="card">
+        <div>
+          <h3>🏆 กิจกรรมอบรมเชิงปฏิบัติการด้านเทคโนโลยี / AI</h3>
+          <p>
+            เข้าร่วมการเรียนรู้การเขียน Prompt และการสร้างเว็บไซต์ด้วยเทคโนโลยีสมัยใหม่ 
+            สามารถนำความรู้มาประยุกต์สร้างผลงานจริงได้สำเร็จ
+          </p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <h3>🤝 กิจกรรมโครงงานและจิตอาสาในโรงเรียน</h3>
+          <p>
+            ร่วมมือกับเพื่อนในทีมวางแผนการทำงาน แบ่งหน้าที่ และนำเสนอผลงานหน้าชั้นเรียนอย่างเป็นระบบ
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ส่วนติดต่อและจริยธรรมดิจิทัล -->
+  <footer id="contact">
+    <p>
+      <strong>ช่องทางติดต่อสาธารณะ:</strong> 
+      อีเมล: <a href="mailto:student.example@email.com">student.example@email.com</a> | 
+      GitHub: <a href="https://github.com/username" target="_blank" rel="noopener">github.com/username</a>
+    </p>
+    <p class="credit">
+      © 2026 [ชื่อ-นามสกุล นักเรียน] • พัฒนาโครงสร้างเว็บไซต์โดยใช้ AI เป็นเครื่องมือช่วยเขียนโค้ด และปรับปรุงเนื้อหาด้วยตนเอง 
+      (ข้อมูลส่วนบุคคลผ่านการคัดกรองตามหลักความปลอดภัยทางดิจิทัล)
+    </p>
+  </footer>
+
+  <!-- JavaScript สำหรับเปิด-ปิดเมนูบนมือถือ -->
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
